@@ -1,0 +1,17 @@
+export const colors = {
+  background: '#F8FAFC',
+  surface: '#FFFFFF',
+  surfaceSelected: '#DBEAFE',
+  primary: '#1D4ED8',
+  primaryPressed: '#1E40AF',
+  text: '#0F172A',
+  textMuted: '#475569',
+  border: '#CBD5E1',
+  borderStrong: '#64748B',
+  success: '#166534',
+  successSurface: '#DCFCE7',
+  danger: '#B91C1C',
+  dangerSurface: '#FEE2E2',
+  disabled: '#94A3B8',
+  overlay: 'rgba(15, 23, 42, 0.45)',
+} as const;
