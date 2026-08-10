@@ -77,12 +77,7 @@ export function FilterControls(props: FilterControlsProps) {
 
   return (
     <Modal animationType="fade" onRequestClose={props.onClose} transparent visible={props.visible}>
-      <View
-        style={[
-          styles.overlay,
-          { paddingBottom: Math.max(insets.bottom, spacing.lg) },
-        ]}
-      >
+      <View style={[styles.overlay, { paddingBottom: Math.max(insets.bottom, spacing.lg) }]}>
         <View accessibilityViewIsModal style={styles.modalPanel}>
           <FilterContent {...props} showCloseButton />
         </View>
