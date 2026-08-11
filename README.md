@@ -156,7 +156,10 @@ iPhone VoiceOver testing verified the corrected date, time-range, AM/PM, selecte
 announcements, plus modal entry, background containment, dismissal, and focus restoration.
 Maximum iPhone Dynamic Type also passed wrapping, visibility, scrolling, and control-access checks.
 Landscape list, modal rotation, safe areas, and state retention passed physical-iPhone testing.
-TalkBack, Android font scaling, and physical-keyboard behavior remain unverified.
+Android emulator testing passed on Android 13/API 33 and Android 16/API 36 phones, including the
+core flow, system back, rotation, and safe areas. A Pixel Tablet API 36 passed expanded filter/detail
+panes, portrait modal switching, and state retention. TalkBack interaction/semantics smoke testing
+and 200% Android font scaling passed; physical-keyboard behavior remains unverified.
 
 ## Responsive and Cross-Platform Decisions
 
@@ -269,7 +272,8 @@ Source portability is not presented as a verified Legacy build.
 
 - The repository is mocked; a production implementation would add cancellation, authentication, API error mapping, caching, and telemetry.
 - Filter edits apply immediately. A larger filter set would use draft/apply state.
-- Native iPhone VoiceOver focus restoration passed; equivalent TalkBack behavior remains unverified.
+- Native iPhone VoiceOver focus restoration passed. TalkBack modal close safely returns to the page
+  heading; exact restoration to the invoking control remains a P1 native-layer enhancement.
 - Scroll-position restoration across a phone-to-tablet column change is not guaranteed.
 - No hinge-aware foldable integration is included.
 - No real-device matrix, Maestro, Detox, EAS Build, Fastlane, or store-release workflow is included in the P0 scope.

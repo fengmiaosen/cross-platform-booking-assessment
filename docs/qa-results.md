@@ -4,15 +4,15 @@ This file distinguishes completed automation, completed manual validation, desig
 
 ## QA Validation Plan
 
-| Area                    | Concise validation procedure                                                        | Current evidence                                      |
-| ----------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------- |
-| Screen readers          | Navigate dates, filters, cards, states, and modals with VoiceOver and TalkBack      | VoiceOver passed; TalkBack pending                    |
-| Keyboard and navigation | Follow native focus order, activate controls, dismiss modals, and restore focus     | Physical keyboard pending                             |
-| iOS and Android         | Check safe areas, modal rotation, system back, edge-to-edge, and platform semantics | iPhone passed; Android pending                        |
-| Small and large screens | Exercise compact, medium, expanded, grid, filter-rail, and details-pane layouts     | Layout logic automated; larger native devices pending |
-| Orientation changes     | Rotate with selection, filters, and details open; verify layout and state retention | Physical iPhone passed                                |
-| Accessibility states    | Verify selected, disabled, expanded, result-count, and unavailable communication    | Automated and VoiceOver passed                        |
-| Interaction consistency | Run date → filter → select → details → close with touch and assistive navigation    | Automated and iPhone passed                           |
+| Area                    | Concise validation procedure                                                        | Current evidence                                 |
+| ----------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------ |
+| Screen readers          | Navigate dates, filters, cards, states, and modals with VoiceOver and TalkBack      | VoiceOver passed; TalkBack emulator smoke passed |
+| Keyboard and navigation | Follow native focus order, activate controls, dismiss modals, and restore focus     | Physical keyboard pending                        |
+| iOS and Android         | Check safe areas, modal rotation, system back, edge-to-edge, and platform semantics | iPhone and Android emulators passed              |
+| Small and large screens | Exercise compact, medium, expanded, grid, filter-rail, and details-pane layouts     | Android phone and tablet passed                  |
+| Orientation changes     | Rotate with selection, filters, and details open; verify layout and state retention | iPhone and Android emulators passed              |
+| Accessibility states    | Verify selected, disabled, expanded, result-count, and unavailable communication    | Automated, VoiceOver, and TalkBack smoke passed  |
+| Interaction consistency | Run date → filter → select → details → close with touch and assistive navigation    | Automated, iPhone, and Android emulators passed  |
 
 ## Automated — Implemented
 
@@ -36,31 +36,36 @@ This file distinguishes completed automation, completed manual validation, desig
 
 Manual native-runtime results must be updated only after the listed environment has actually been used.
 
-| Environment                   | Status         | Notes                                                              |
-| ----------------------------- | -------------- | ------------------------------------------------------------------ |
-| iPhone small-screen simulator | Not tested     | CoreSimulator service was unavailable                              |
-| Mainstream iPhone simulator   | Not tested     | CoreSimulator service was unavailable                              |
-| iPad portrait/landscape       | Not tested     | CoreSimulator service was unavailable                              |
-| Android phone emulator        | Not tested     | Android `adb` was unavailable                                      |
-| Android tablet emulator       | Not tested     | Android `adb` was unavailable                                      |
-| Physical iPhone / Expo SDK 56 | Passed         | Signed Expo Go installed; project opened successfully              |
-| iPhone landscape              | Passed         | List, modals, safe areas, and state retention verified             |
-| VoiceOver speech semantics    | Passed         | Date, time range, AM/PM, selected, and unavailable states verified |
-| VoiceOver modal focus         | Passed         | Entry, containment, dismissal, and focus restoration verified      |
-| TalkBack                      | Not yet tested | Requires native runtime                                            |
-| iPhone Dynamic Type           | Passed         | Maximum size: wrapping, visibility, scrolling, and controls passed |
-| Android font scale            | Not yet tested | Requires Android runtime                                           |
-| Android system back           | Not yet tested | Requires Android runtime                                           |
+| Environment                   | Status       | Notes                                                                |
+| ----------------------------- | ------------ | -------------------------------------------------------------------- |
+| iPhone small-screen simulator | Not tested   | CoreSimulator service was unavailable                                |
+| Mainstream iPhone simulator   | Not tested   | CoreSimulator service was unavailable                                |
+| iPad portrait/landscape       | Not tested   | CoreSimulator service was unavailable                                |
+| Android 16/API 36 phone       | Passed       | Pixel 8 Pro: core flow, portrait/landscape, safe areas, and state    |
+| Android 13/API 33 phone       | Passed       | Pixel 6: core flow, filters, details, system back, and landscape     |
+| Android 16/API 36 tablet      | Passed       | Pixel Tablet: filter rail, details pane, portrait modal, and state   |
+| Physical iPhone / Expo SDK 56 | Passed       | Signed Expo Go installed; project opened successfully                |
+| iPhone landscape              | Passed       | List, modals, safe areas, and state retention verified               |
+| VoiceOver speech semantics    | Passed       | Date, time range, AM/PM, selected, and unavailable states verified   |
+| VoiceOver modal focus         | Passed       | Entry, containment, dismissal, and focus restoration verified        |
+| TalkBack                      | Smoke passed | Labels, states, modal containment/entry, activation, and back tested |
+| iPhone Dynamic Type           | Passed       | Maximum size: wrapping, visibility, scrolling, and controls passed   |
+| Android font scale            | Passed       | 200%: wrapping, stacked actions, filters, details, and scrolling     |
+| Android system back           | Passed       | Details and filter modals dismiss without losing booking state       |
 
 ## Compatibility by Design
 
-| Area                            | Status                    | Boundary                                             |
-| ------------------------------- | ------------------------- | ---------------------------------------------------- |
-| Compact/medium/expanded windows | Automated layout logic    | Compact iPhone passed; larger native layouts pending |
-| Foldable resizing               | Design compatibility only | No physical foldable device or hinge awareness       |
-| Legacy Architecture             | Source portability only   | Requires a separate SDK 54 build                     |
+| Area                            | Status                    | Boundary                                        |
+| ------------------------------- | ------------------------- | ----------------------------------------------- |
+| Compact/medium/expanded windows | Native and automated      | iPhone plus Android phone/tablet layouts passed |
+| Foldable resizing               | Design compatibility only | No physical foldable device or hinge awareness  |
+| Legacy Architecture             | Source portability only   | Requires a separate SDK 54 build                |
 
 See [VoiceOver QA Notes](voiceover-qa.md) for observed issues, fixes, and completed iPhone checks.
+
+TalkBack was validated as an emulator smoke test. Modal close returns accessibility focus to the
+page heading rather than the invoking control; exact trigger restoration remains a P1 native-layer
+enhancement. Spoken audio was not independently recorded.
 
 ## Future Work
 
