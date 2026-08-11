@@ -37,6 +37,37 @@ function expectOpenModalSupportsRotation() {
 }
 
 describe('BookingScreen', () => {
+  it('exposes a loading state while initial data is pending', async () => {
+    const datesRequest = createDeferred<BookingDate[]>();
+    const repository: BookingRepository = {
+      getDates: jest.fn(() => datesRequest.promise),
+      getSessions: jest.fn(),
+    };
+
+    await renderScreen(repository);
+
+    expect(screen.getByLabelText('Loading sessions').props.accessibilityRole).toBe('progressbar');
+  });
+
+  it('shows an empty state when the selected date has no sessions', async () => {
+    const repository: BookingRepository = {
+      getDates: jest.fn().mockResolvedValue([
+        {
+          id: 'empty-date',
+          isoDate: '2026-08-10',
+          weekdayLabel: 'Mon',
+          dayNumber: '10',
+          fullLabel: 'Monday, August 10, 2026',
+        },
+      ]),
+      getSessions: jest.fn().mockResolvedValue([]),
+    };
+
+    await renderScreen(repository);
+
+    expect(await screen.findByRole('header', { name: 'No sessions found' })).toBeTruthy();
+  });
+
   it('completes the accessible booking flow', async () => {
     await renderScreen();
 
@@ -79,15 +110,40 @@ describe('BookingScreen', () => {
   });
 
   it('shows a recoverable error state', async () => {
+    const recoveredSession: Session = {
+      id: 'recovered-session',
+      dateId: 'recovered-date',
+      title: 'Recovered Session',
+      startTime: '8:00 AM',
+      endTime: '9:00 AM',
+      coach: 'Coach',
+      location: 'Studio',
+      description: 'Available after retry.',
+      openSpots: 4,
+    };
     const repository: BookingRepository = {
-      getDates: jest.fn().mockRejectedValue(new Error('Service unavailable')),
-      getSessions: jest.fn(),
+      getDates: jest
+        .fn()
+        .mockRejectedValueOnce(new Error('Service unavailable'))
+        .mockResolvedValueOnce([
+          {
+            id: 'recovered-date',
+            isoDate: '2026-08-10',
+            weekdayLabel: 'Mon',
+            dayNumber: '10',
+            fullLabel: 'Monday, August 10, 2026',
+          },
+        ]),
+      getSessions: jest.fn().mockResolvedValue([recoveredSession]),
     };
 
     await renderScreen(repository);
 
     expect(await screen.findByText('Service unavailable')).toBeTruthy();
-    expect(screen.getByRole('button', { name: 'Retry loading sessions' })).toBeTruthy();
+    await fireEvent.press(screen.getByRole('button', { name: 'Retry loading sessions' }));
+
+    expect(await screen.findByText('Recovered Session')).toBeTruthy();
+    expect(repository.getDates).toHaveBeenCalledTimes(2);
   });
 
   it('ignores stale session responses after rapid date changes', async () => {

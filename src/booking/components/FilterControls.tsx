@@ -31,6 +31,8 @@ function FilterContent({ filters, showCloseButton, onChange, onClose }: FilterCo
   const { fontScale } = useWindowDimensions();
   const usesAccessibilityTextSize = fontScale >= 2;
 
+  // Assumption: Availability is the only filter because the supplied data has
+  // no categories, instructors, locations, or other filterable fields.
   return (
     <View style={styles.panel}>
       <View style={styles.header}>

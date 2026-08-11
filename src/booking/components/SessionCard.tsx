@@ -68,6 +68,8 @@ export const SessionCard = memo(function SessionCard({
         {availabilityText}
       </Text>
 
+      {/* Assumption: Selecting a session and opening its details are separate
+          actions because the task lists them as distinct capabilities. */}
       <View style={[styles.actions, usesAccessibilityTextSize && styles.actionsLargeText]}>
         <Pressable
           accessibilityLanguage={ACCESSIBILITY_LANGUAGE}

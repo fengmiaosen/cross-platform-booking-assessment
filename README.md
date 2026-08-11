@@ -63,8 +63,8 @@ Expo Go availability varies during SDK transitions. If the installed Expo Go cli
 
 ## Accessibility QA Notes
 
-[VoiceOver QA Notes](docs/voiceover-qa.md) covers screen-reader findings, fixes, and remaining
-physical-device checks.
+[VoiceOver QA Notes](docs/voiceover-qa.md) covers screen-reader findings, fixes, and completed
+physical-iPhone checks.
 
 ## Architecture
 
@@ -185,6 +185,7 @@ No foldable test device was available. The screen provides baseline functional c
 
 The following assumptions are also documented next to the relevant implementation code:
 
+- The supplied menu icon represents the required Filters entry because no other destination was provided.
 - The supplied arrows move to the previous or next available date.
 - Filtering is limited to availability because no other filter data was provided.
 - Selecting a session and opening its details are distinct actions.
@@ -199,10 +200,11 @@ Implemented P0 automation:
 
 - reducer unit tests;
 - selector and responsive-layout unit tests;
+- DateSelector relative-navigation and boundary-state tests;
 - SessionCard accessibility component tests;
 - date and spoken-time accessibility formatting tests;
 - BookingScreen integration flow;
-- loading failure and retry presentation;
+- loading, empty, error, and successful retry presentation;
 - stale asynchronous response protection.
 
 The main integration test covers:
@@ -227,12 +229,13 @@ Current automated validation:
 | -------------------------------- | ------------------------- |
 | TypeScript                       | Passed                    |
 | ESLint                           | Passed with zero warnings |
-| Jest/RNTL                        | 5 suites, 21 tests passed |
+| Jest/RNTL                        | 6 suites, 25 tests passed |
 | Expo Doctor                      | 21/21 checks passed       |
 | iOS JavaScript bundle export     | Passed                    |
 | Android JavaScript bundle export | Passed                    |
 
-See [docs/qa-results.md](docs/qa-results.md) for the exact automated and manual validation status.
+See [docs/qa-results.md](docs/qa-results.md) for the concise QA validation plan and exact automated
+and manual status.
 
 ## Future E2E Strategy
 
@@ -266,7 +269,7 @@ Source portability is not presented as a verified Legacy build.
 
 - The repository is mocked; a production implementation would add cancellation, authentication, API error mapping, caching, and telemetry.
 - Filter edits apply immediately. A larger filter set would use draft/apply state.
-- Exact focus restoration after closing a modal needs native VoiceOver/TalkBack validation.
+- Native iPhone VoiceOver focus restoration passed; equivalent TalkBack behavior remains unverified.
 - Scroll-position restoration across a phone-to-tablet column change is not guaranteed.
 - No hinge-aware foldable integration is included.
 - No real-device matrix, Maestro, Detox, EAS Build, Fastlane, or store-release workflow is included in the P0 scope.

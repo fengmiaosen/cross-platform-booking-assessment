@@ -32,7 +32,7 @@ VoiceOver is named **旁白** on a Chinese iPhone. It is different from Speak Sc
 4. Combine business meaning such as “Unavailable” with native selected/disabled states.
 5. Use unit tests for props and formatting, then verify pronunciation on a physical device.
 
-## Remaining Device Checks
+## Completed Device Checks
 
 - [x] VoiceOver enabled and producing speech
 - [x] Complete date pronunciation

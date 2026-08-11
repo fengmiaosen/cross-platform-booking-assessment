@@ -19,6 +19,8 @@ export function BookingHeader({
 }: BookingHeaderProps) {
   const { fontScale } = useWindowDimensions();
   const usesAccessibilityTextSize = fontScale >= 2;
+  // Assumption: The unlabeled menu control in the supplied source represents
+  // filters because filtering is required and no other menu destination exists.
   const filterLabel = activeFilterCount > 0 ? `Filters, ${activeFilterCount} active` : 'Filters';
 
   return (

@@ -5,6 +5,8 @@ export interface BookingRepository {
   getSessions(query: SessionQuery): Promise<Session[]>;
 }
 
+// Assumption: The task does not provide a backend API, so a typed,
+// deterministic repository stands in for the production data source.
 const dates: BookingDate[] = [
   {
     id: '2026-08-10',
