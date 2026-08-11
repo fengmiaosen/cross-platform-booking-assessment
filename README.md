@@ -159,7 +159,9 @@ Landscape list, modal rotation, safe areas, and state retention passed physical-
 Android emulator testing passed on Android 13/API 33 and Android 16/API 36 phones, including the
 core flow, system back, rotation, and safe areas. A Pixel Tablet API 36 passed expanded filter/detail
 panes, portrait modal switching, and state retention. TalkBack interaction/semantics smoke testing
-and 200% Android font scaling passed; physical-keyboard behavior remains unverified.
+and 200% Android font scaling passed. An iPhone 16 Pro Max and iPad Pro 13-inch on iOS 18.6 passed
+phone-landscape modal filters and tablet filter/detail panes; physical-keyboard behavior remains
+unverified.
 
 ## Responsive and Cross-Platform Decisions
 

@@ -38,9 +38,9 @@ Manual native-runtime results must be updated only after the listed environment 
 
 | Environment                   | Status       | Notes                                                                |
 | ----------------------------- | ------------ | -------------------------------------------------------------------- |
-| iPhone small-screen simulator | Not tested   | CoreSimulator service was unavailable                                |
-| Mainstream iPhone simulator   | Not tested   | CoreSimulator service was unavailable                                |
-| iPad portrait/landscape       | Not tested   | CoreSimulator service was unavailable                                |
+| iPhone small-screen simulator | Not tested   | Not included in this responsive-layout regression pass               |
+| Mainstream iPhone simulator   | Passed       | iPhone 16 Pro Max/iOS 18.6: portrait and landscape modal filters     |
+| iPad portrait/landscape       | Passed       | iPad Pro 13/iOS 18.6: filter rail, details pane, and rotation        |
 | Android 16/API 36 phone       | Passed       | Pixel 8 Pro: core flow, short-landscape modal filters, safe areas    |
 | Android 13/API 33 phone       | Passed       | Pixel 6: core flow, filters, details, system back, and landscape     |
 | Android 16/API 36 tablet      | Passed       | Pixel Tablet: filter rail, details pane, portrait modal, and state   |
