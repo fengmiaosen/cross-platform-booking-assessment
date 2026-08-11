@@ -20,7 +20,7 @@ This file distinguishes completed automation, completed manual validation, desig
 | ---------------------------------------- | ------ |
 | TypeScript strict type check             | Passed |
 | ESLint with zero warnings                | Passed |
-| Jest/RNTL: 6 suites, 25 tests            | Passed |
+| Jest/RNTL: 6 suites, 27 tests            | Passed |
 | Reducer and selector unit tests          | Passed |
 | Responsive layout unit tests             | Passed |
 | DateSelector navigation and boundaries   | Passed |
@@ -41,7 +41,7 @@ Manual native-runtime results must be updated only after the listed environment 
 | iPhone small-screen simulator | Not tested   | CoreSimulator service was unavailable                                |
 | Mainstream iPhone simulator   | Not tested   | CoreSimulator service was unavailable                                |
 | iPad portrait/landscape       | Not tested   | CoreSimulator service was unavailable                                |
-| Android 16/API 36 phone       | Passed       | Pixel 8 Pro: core flow, portrait/landscape, safe areas, and state    |
+| Android 16/API 36 phone       | Passed       | Pixel 8 Pro: core flow, short-landscape modal filters, safe areas    |
 | Android 13/API 33 phone       | Passed       | Pixel 6: core flow, filters, details, system back, and landscape     |
 | Android 16/API 36 tablet      | Passed       | Pixel Tablet: filter rail, details pane, portrait modal, and state   |
 | Physical iPhone / Expo SDK 56 | Passed       | Signed Expo Go installed; project opened successfully                |

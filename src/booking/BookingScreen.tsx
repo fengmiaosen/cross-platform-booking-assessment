@@ -4,7 +4,11 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
-import { ACCESSIBILITY_LANGUAGE, getColumnCount, getLayoutMode } from './booking.constants';
+import {
+  ACCESSIBILITY_LANGUAGE,
+  getColumnCount,
+  getPersistentPanelVisibility,
+} from './booking.constants';
 import type { BookingRepository } from './booking.repository';
 import { BookingHeader } from './components/BookingHeader';
 import { BookingStateView } from './components/BookingStateView';
@@ -21,16 +25,12 @@ type BookingScreenProps = {
 export function BookingScreen({ repository }: BookingScreenProps) {
   // Assumption: Keyboard scope means native iOS/Android hardware-keyboard and
   // assistive navigation. React Native Web is outside the requested platforms.
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const { state, visibleSessions, detailsSession, activeFilterCount, actions } =
     useBookingController(repository);
 
-  const layoutMode = getLayoutMode(width);
-  const showInlineFilters = layoutMode === 'expanded';
-  // Assumption: Phones and narrower windows use modals, while sufficiently
-  // wide windows can keep filters and session details visible as side panes.
-  const showDetailsPane = width >= 1180;
+  const { showInlineFilters, showDetailsPane } = getPersistentPanelVisibility(width, height);
   const reservedWidth = (showInlineFilters ? 272 : 0) + (showDetailsPane ? 336 : 0);
   const columnCount = getColumnCount(Math.max(320, width - reservedWidth));
 

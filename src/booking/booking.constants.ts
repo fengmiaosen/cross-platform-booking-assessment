@@ -37,6 +37,18 @@ export function getLayoutMode(width: number): LayoutMode {
   return 'expanded';
 }
 
+// Assumption: Persistent side panels need tablet-like height as well as width.
+// A phone in landscape can exceed the expanded width breakpoint while remaining
+// too short for a usable filter rail, so it should keep the modal presentation.
+export function getPersistentPanelVisibility(width: number, height: number) {
+  const hasPanelHeight = height >= 600;
+
+  return {
+    showInlineFilters: getLayoutMode(width) === 'expanded' && hasPanelHeight,
+    showDetailsPane: width >= 1180 && hasPanelHeight,
+  };
+}
+
 export function getColumnCount(width: number): number {
   return width >= 720 ? 2 : 1;
 }

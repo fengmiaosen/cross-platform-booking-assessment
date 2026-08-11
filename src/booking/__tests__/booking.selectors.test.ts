@@ -1,4 +1,9 @@
-import { getColumnCount, getLayoutMode, initialBookingState } from '../booking.constants';
+import {
+  getColumnCount,
+  getLayoutMode,
+  getPersistentPanelVisibility,
+  initialBookingState,
+} from '../booking.constants';
 import { filterSessions, getActiveFilterCount, selectDetailsSession } from '../booking.selectors';
 import type { Session } from '../booking.types';
 
@@ -56,5 +61,19 @@ describe('responsive layout', () => {
   it('uses two columns only when enough result width is available', () => {
     expect(getColumnCount(719)).toBe(1);
     expect(getColumnCount(720)).toBe(2);
+  });
+
+  it('keeps persistent panels hidden on a short landscape phone', () => {
+    expect(getPersistentPanelVisibility(997, 448)).toEqual({
+      showInlineFilters: false,
+      showDetailsPane: false,
+    });
+  });
+
+  it('shows persistent panels when a landscape tablet has enough space', () => {
+    expect(getPersistentPanelVisibility(1280, 800)).toEqual({
+      showInlineFilters: true,
+      showDetailsPane: true,
+    });
   });
 });

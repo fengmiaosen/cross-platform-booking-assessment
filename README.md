@@ -163,14 +163,17 @@ and 200% Android font scaling passed; physical-keyboard behavior remains unverif
 
 ## Responsive and Cross-Platform Decisions
 
-Layout is based on the current window width rather than a physical device label:
+Layout is based on the current window dimensions rather than a physical device label:
 
-| Mode          |     Width | Behavior                                             |
-| ------------- | --------: | ---------------------------------------------------- |
-| Compact       |    `<600` | One-column list, modal filters and details           |
-| Medium        | `600-899` | One or two result columns, modal filters and details |
-| Expanded      |   `>=900` | Inline filter rail and adaptive result grid          |
-| Wide expanded |  `>=1180` | Optional details pane alongside results              |
+| Mode          | Dimensions                     | Behavior                                             |
+| ------------- | ------------------------------ | ---------------------------------------------------- |
+| Compact       | Width `<600`                   | One-column list, modal filters and details           |
+| Medium        | Width `600-899`                | One or two result columns, modal filters and details |
+| Expanded      | Width `>=900`, height `>=600`  | Inline filter rail and adaptive result grid          |
+| Wide expanded | Width `>=1180`, height `>=600` | Optional details pane alongside results              |
+
+Short landscape phone windows retain the top Filters button and modal presentation even when
+their width crosses the expanded breakpoint.
 
 The implementation uses safe-area insets, supports orientation changes, and preserves booking state while the window resizes. Expo SDK 56 targets Android API 36, so Android 16 edge-to-edge and resizable large-screen behavior are treated as core platform concerns.
 
@@ -193,7 +196,9 @@ The following assumptions are also documented next to the relevant implementatio
 - Filtering is limited to availability because no other filter data was provided.
 - Selecting a session and opening its details are distinct actions.
 - Mobile details use a modal; sufficiently wide windows can use a side pane.
-- Responsive behavior is based on available window width because no breakpoints were supplied.
+- Responsive behavior is based on available window dimensions because no breakpoints were supplied.
+- Persistent side panels require at least 600 logical pixels of height so wide but short landscape
+  phones are not treated as tablets.
 - Keyboard scope means iOS/Android physical-keyboard and assistive navigation, not React Native Web.
 - A typed mock repository stands in for an unspecified backend.
 
