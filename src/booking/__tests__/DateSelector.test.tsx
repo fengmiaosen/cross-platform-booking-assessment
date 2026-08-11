@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
+import { colors } from '../../theme/colors';
 import type { BookingDate } from '../booking.types';
 import { DateSelector } from '../components/DateSelector';
 
@@ -39,6 +40,12 @@ describe('DateSelector', () => {
 
     expect(onSelectDate).toHaveBeenNthCalledWith(1, 'monday');
     expect(onSelectDate).toHaveBeenNthCalledWith(2, 'wednesday');
+    expect(screen.getByRole('button', { name: 'Select next date' })).toHaveStyle({
+      borderColor: colors.borderStrong,
+    });
+    expect(screen.getByRole('button', { name: 'Monday, August 10, 2026' })).toHaveStyle({
+      borderColor: colors.borderStrong,
+    });
   });
 
   it('disables relative navigation at the date boundaries', async () => {

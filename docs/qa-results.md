@@ -12,6 +12,7 @@ This file distinguishes completed automation, completed manual validation, desig
 | Small and large screens | Exercise compact, medium, expanded, grid, filter-rail, and details-pane layouts     | Android phone and tablet passed                  |
 | Orientation changes     | Rotate with selection, filters, and details open; verify layout and state retention | iPhone and Android emulators passed              |
 | Accessibility states    | Verify selected, disabled, expanded, result-count, and unavailable communication    | Automated, VoiceOver, and TalkBack smoke passed  |
+| Visual contrast         | Check text tokens at 4.5:1 and interactive boundaries at 3:1                        | Automated token checks passed                    |
 | Interaction consistency | Run date → filter → select → details → close with touch and assistive navigation    | Automated, iPhone, and Android emulators passed  |
 
 ## Automated — Implemented
@@ -20,11 +21,12 @@ This file distinguishes completed automation, completed manual validation, desig
 | ---------------------------------------- | ------ |
 | TypeScript strict type check             | Passed |
 | ESLint with zero warnings                | Passed |
-| Jest/RNTL: 6 suites, 27 tests            | Passed |
+| Jest/RNTL: 7 suites, 29 tests            | Passed |
 | Reducer and selector unit tests          | Passed |
 | Responsive layout unit tests             | Passed |
 | DateSelector navigation and boundaries   | Passed |
 | SessionCard accessibility tests          | Passed |
+| Theme text and control contrast tests    | Passed |
 | BookingScreen main-flow integration test | Passed |
 | Loading/empty/error/retry integration    | Passed |
 | Stale-response integration test          | Passed |
@@ -70,4 +72,5 @@ enhancement. Spoken audio was not independently recorded.
 ## Future Work
 
 - P1: Maestro smoke E2E on iOS and Android development builds.
+- P1: Dark mode and platform increased-contrast preference support.
 - P2: Detox only for a production project with stable native CI.

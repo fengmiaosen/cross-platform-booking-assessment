@@ -2,6 +2,7 @@ export const colors = {
   background: '#F8FAFC',
   surface: '#FFFFFF',
   surfaceSelected: '#DBEAFE',
+  surfacePressed: '#BFDBFE',
   primary: '#1D4ED8',
   primaryPressed: '#1E40AF',
   text: '#0F172A',

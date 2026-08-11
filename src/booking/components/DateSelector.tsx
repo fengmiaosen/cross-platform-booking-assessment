@@ -43,7 +43,7 @@ export function DateSelector({ dates, selectedDateId, onSelectDate }: DateSelect
         style={({ pressed }) => [
           styles.arrowButton,
           previousDisabled && styles.disabled,
-          pressed && !previousDisabled && styles.pressed,
+          pressed && !previousDisabled && styles.controlPressed,
         ]}
       >
         <Text allowFontScaling={false} importantForAccessibility="no" style={styles.arrowText}>
@@ -70,7 +70,7 @@ export function DateSelector({ dates, selectedDateId, onSelectDate }: DateSelect
               style={({ pressed }) => [
                 styles.dateButton,
                 selected && styles.dateButtonSelected,
-                pressed && styles.pressed,
+                pressed && styles.controlPressed,
               ]}
             >
               <Text style={[styles.weekday, selected && styles.dateTextSelected]}>
@@ -94,7 +94,7 @@ export function DateSelector({ dates, selectedDateId, onSelectDate }: DateSelect
         style={({ pressed }) => [
           styles.arrowButton,
           nextDisabled && styles.disabled,
-          pressed && !nextDisabled && styles.pressed,
+          pressed && !nextDisabled && styles.controlPressed,
         ]}
       >
         <Text allowFontScaling={false} importantForAccessibility="no" style={styles.arrowText}>
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: colors.borderStrong,
     backgroundColor: colors.surface,
   },
   arrowText: {
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: colors.borderStrong,
     backgroundColor: colors.surface,
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xs,
@@ -163,8 +163,8 @@ const styles = StyleSheet.create({
   dateTextSelected: {
     color: colors.primary,
   },
-  pressed: {
-    opacity: 0.72,
+  controlPressed: {
+    backgroundColor: colors.surfacePressed,
   },
   disabled: {
     opacity: 0.4,

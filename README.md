@@ -146,6 +146,10 @@ Local `useReducer` state is sufficient because booking state is not shared with 
 - Filter controls expose expanded state and the number of active filters.
 - Session result counts use a polite live region where supported.
 - Touch targets are at least 48 by 48 logical pixels.
+- Normal text color combinations meet at least 4.5:1 contrast, while interactive control
+  boundaries meet at least 3:1 and are protected by automated theme-token tests.
+- Primary pressed states use the darker `primaryPressed` token instead of reducing the opacity of
+  both the background and its text.
 - Text can wrap and continues to use the platform font-scaling behavior.
 - Accessibility text sizes stack competing horizontal content and make filter content scrollable.
 - Android modals implement `onRequestClose` for system back navigation.
@@ -212,6 +216,7 @@ Implemented P0 automation:
 - selector and responsive-layout unit tests;
 - DateSelector relative-navigation and boundary-state tests;
 - SessionCard accessibility component tests;
+- theme-token text and interactive-boundary contrast tests;
 - date and spoken-time accessibility formatting tests;
 - BookingScreen integration flow;
 - loading, empty, error, and successful retry presentation;
@@ -239,7 +244,7 @@ Current automated validation:
 | -------------------------------- | ------------------------- |
 | TypeScript                       | Passed                    |
 | ESLint                           | Passed with zero warnings |
-| Jest/RNTL                        | 6 suites, 25 tests passed |
+| Jest/RNTL                        | 7 suites, 29 tests passed |
 | Expo Doctor                      | 21/21 checks passed       |
 | iOS JavaScript bundle export     | Passed                    |
 | Android JavaScript bundle export | Passed                    |
@@ -283,6 +288,8 @@ Source portability is not presented as a verified Legacy build.
   heading; exact restoration to the invoking control remains a P1 native-layer enhancement.
 - Scroll-position restoration across a phone-to-tablet column change is not guaranteed.
 - No hinge-aware foldable integration is included.
+- The P0 theme is light-only; dark mode and platform increased-contrast preferences remain future
+  enhancements.
 - No real-device matrix, Maestro, Detox, EAS Build, Fastlane, or store-release workflow is included in the P0 scope.
 - A server-backed product may move remote state to TanStack Query and cross-route client state to Zustand.
 

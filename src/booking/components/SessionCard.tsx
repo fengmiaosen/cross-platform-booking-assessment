@@ -86,7 +86,8 @@ export const SessionCard = memo(function SessionCard({
             usesAccessibilityTextSize && styles.actionButtonLargeText,
             selected && styles.selectButtonSelected,
             !available && styles.disabledButton,
-            pressed && available && styles.pressed,
+            pressed && available && !selected && styles.selectButtonPressed,
+            pressed && selected && styles.outlineButtonPressed,
           ]}
         >
           <Text
@@ -108,7 +109,7 @@ export const SessionCard = memo(function SessionCard({
           style={({ pressed }) => [
             styles.detailsButton,
             usesAccessibilityTextSize && styles.actionButtonLargeText,
-            pressed && styles.pressed,
+            pressed && styles.outlineButtonPressed,
           ]}
         >
           <Text style={styles.detailsButtonText}>View details</Text>
@@ -211,6 +212,9 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
     backgroundColor: colors.surface,
   },
+  selectButtonPressed: {
+    backgroundColor: colors.primaryPressed,
+  },
   selectButtonText: {
     color: colors.surface,
     fontSize: 15,
@@ -251,7 +255,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textAlign: 'center',
   },
-  pressed: {
-    opacity: 0.72,
+  outlineButtonPressed: {
+    backgroundColor: colors.surfacePressed,
   },
 });
