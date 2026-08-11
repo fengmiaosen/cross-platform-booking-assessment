@@ -150,9 +150,9 @@ Local `useReducer` state is sufficient because booking state is not shared with 
 - Android modals implement `onRequestClose` for system back navigation.
 
 Automated tests verify accessible names, speech formatting, and selected/disabled states. Physical
-iPhone VoiceOver validation is in progress and has already identified locale, time-abbreviation,
-range-context, verbosity, and unavailable-state issues. The latest fixes still require a final
-device regression pass. TalkBack, focus restoration, and physical-keyboard behavior remain
+iPhone VoiceOver testing verified the corrected date, time-range, AM/PM, selected, and unavailable
+announcements. The details modal also opens on its correctly labelled close button. TalkBack,
+modal background containment and focus restoration, and physical-keyboard behavior remain
 unverified.
 
 ## Responsive and Cross-Platform Decisions

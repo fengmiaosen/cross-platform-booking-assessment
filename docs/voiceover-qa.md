@@ -35,9 +35,11 @@ VoiceOver is named **旁白** on a Chinese iPhone. It is different from Speak Sc
 ## Remaining Device Checks
 
 - [x] VoiceOver enabled and producing speech
-- [ ] Complete date pronunciation
-- [ ] AM and PM across morning, afternoon, and evening sessions
-- [ ] Time-range context and direction
-- [ ] Selected and unavailable button announcements
-- [ ] Filter and details modal focus order
+- [x] Complete date pronunciation
+- [x] AM and PM across morning, afternoon, and evening sessions
+- [x] Time-range context and direction
+- [x] Selected and unavailable button announcements
+- [x] Details modal opens on “Close session details”
+- [ ] Filter/details modal background containment
+- [ ] Focus restoration after closing a modal
 - [ ] Large Dynamic Type layout

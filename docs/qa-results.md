@@ -31,7 +31,8 @@ Manual native-runtime results must be updated only after the listed environment 
 | Android phone emulator            | Not tested     | Android `adb` was unavailable                                      |
 | Android tablet emulator           | Not tested     | Android `adb` was unavailable                                      |
 | Physical iPhone / Expo SDK 56     | Passed         | Signed Expo Go installed; project opened successfully              |
-| VoiceOver                         | In progress    | Speech works; semantic fixes implemented; final regression pending |
+| VoiceOver speech semantics        | Passed         | Date, time range, AM/PM, selected, and unavailable states verified |
+| VoiceOver modal focus             | In progress    | Details entry passed; containment and restoration remain           |
 | TalkBack                          | Not yet tested | Requires native runtime                                            |
 | Dynamic Type / Android font scale | Not yet tested | Requires system settings                                           |
 | Android system back               | Not yet tested | Requires Android runtime                                           |
