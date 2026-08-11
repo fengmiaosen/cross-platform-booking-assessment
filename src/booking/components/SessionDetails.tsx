@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 import { formatTimeRangeForAccessibility } from '../booking.accessibility';
-import { ACCESSIBILITY_LANGUAGE } from '../booking.constants';
+import { ACCESSIBILITY_LANGUAGE, SUPPORTED_MODAL_ORIENTATIONS } from '../booking.constants';
 import type { Session } from '../booking.types';
 
 type SessionDetailsProps = {
@@ -37,13 +37,13 @@ function DetailsContent({ session, onClose }: Omit<SessionDetailsProps, 'present
           onPress={onClose}
           style={({ pressed }) => [styles.closeButton, pressed && styles.pressed]}
         >
-          <Text importantForAccessibility="no" style={styles.closeText}>
+          <Text allowFontScaling={false} importantForAccessibility="no" style={styles.closeText}>
             ×
           </Text>
         </Pressable>
       </View>
 
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView style={styles.scroller} contentContainerStyle={styles.content}>
         <Text accessibilityLanguage={ACCESSIBILITY_LANGUAGE} style={styles.sessionTitle}>
           {session.title}
         </Text>
@@ -110,7 +110,13 @@ export function SessionDetails({ session, presentation, onClose }: SessionDetail
   }
 
   return (
-    <Modal animationType="fade" onRequestClose={onClose} transparent visible={session !== null}>
+    <Modal
+      animationType="fade"
+      onRequestClose={onClose}
+      supportedOrientations={SUPPORTED_MODAL_ORIENTATIONS}
+      transparent
+      visible={session !== null}
+    >
       <View
         style={[
           styles.overlay,
@@ -160,6 +166,8 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   title: {
+    minWidth: 0,
+    flex: 1,
     color: colors.text,
     fontSize: 20,
     fontWeight: '700',
@@ -167,6 +175,7 @@ const styles = StyleSheet.create({
   closeButton: {
     width: 48,
     height: 48,
+    flexShrink: 0,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 12,
@@ -174,7 +183,9 @@ const styles = StyleSheet.create({
   closeText: {
     color: colors.text,
     fontSize: 30,
-    lineHeight: 32,
+  },
+  scroller: {
+    minHeight: 0,
   },
   content: {
     gap: spacing.lg,
@@ -184,7 +195,6 @@ const styles = StyleSheet.create({
     color: colors.text,
     fontSize: 24,
     fontWeight: '700',
-    lineHeight: 30,
   },
   detailGroup: {
     gap: spacing.xs,
@@ -198,12 +208,10 @@ const styles = StyleSheet.create({
   detailValue: {
     color: colors.text,
     fontSize: 16,
-    lineHeight: 22,
   },
   description: {
     color: colors.textMuted,
     fontSize: 16,
-    lineHeight: 24,
   },
   pressed: {
     opacity: 0.7,

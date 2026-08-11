@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
@@ -20,6 +20,8 @@ export const SessionCard = memo(function SessionCard({
   onSelect,
   onOpenDetails,
 }: SessionCardProps) {
+  const { fontScale } = useWindowDimensions();
+  const usesAccessibilityTextSize = fontScale >= 2;
   const available = session.openSpots > 0;
   const availabilityText = available ? `${session.openSpots} spots available` : 'Session full';
   const timeAccessibilityLabel = formatTimeRangeForAccessibility(
@@ -32,7 +34,7 @@ export const SessionCard = memo(function SessionCard({
 
   return (
     <View style={[styles.card, selected && styles.cardSelected]}>
-      <View style={styles.header}>
+      <View style={[styles.header, usesAccessibilityTextSize && styles.headerLargeText]}>
         <View style={styles.titleGroup}>
           <Text accessibilityLanguage={ACCESSIBILITY_LANGUAGE} style={styles.title}>
             {session.title}
@@ -66,7 +68,7 @@ export const SessionCard = memo(function SessionCard({
         {availabilityText}
       </Text>
 
-      <View style={styles.actions}>
+      <View style={[styles.actions, usesAccessibilityTextSize && styles.actionsLargeText]}>
         <Pressable
           accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
           accessibilityRole="button"
@@ -79,6 +81,7 @@ export const SessionCard = memo(function SessionCard({
           onPress={() => onSelect(session.id)}
           style={({ pressed }) => [
             styles.selectButton,
+            usesAccessibilityTextSize && styles.actionButtonLargeText,
             selected && styles.selectButtonSelected,
             !available && styles.disabledButton,
             pressed && available && styles.pressed,
@@ -100,7 +103,11 @@ export const SessionCard = memo(function SessionCard({
           accessibilityRole="button"
           accessibilityLabel={`View details for ${session.title}`}
           onPress={() => onOpenDetails(session.id)}
-          style={({ pressed }) => [styles.detailsButton, pressed && styles.pressed]}
+          style={({ pressed }) => [
+            styles.detailsButton,
+            usesAccessibilityTextSize && styles.actionButtonLargeText,
+            pressed && styles.pressed,
+          ]}
         >
           <Text style={styles.detailsButtonText}>View details</Text>
         </Pressable>
@@ -130,6 +137,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: spacing.sm,
   },
+  headerLargeText: {
+    flexDirection: 'column',
+    alignItems: 'stretch',
+  },
   titleGroup: {
     flex: 1,
     gap: spacing.xs,
@@ -138,21 +149,17 @@ const styles = StyleSheet.create({
     color: colors.text,
     fontSize: 18,
     fontWeight: '700',
-    lineHeight: 24,
   },
   time: {
     color: colors.textMuted,
     fontSize: 15,
-    lineHeight: 21,
   },
   metadata: {
     color: colors.textMuted,
     fontSize: 14,
-    lineHeight: 20,
   },
   availability: {
     alignSelf: 'flex-start',
-    overflow: 'hidden',
     borderRadius: 8,
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xs,
@@ -168,7 +175,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.dangerSurface,
   },
   selectedBadge: {
-    overflow: 'hidden',
+    alignSelf: 'flex-start',
     borderRadius: 8,
     color: colors.primary,
     backgroundColor: colors.surface,
@@ -182,14 +189,20 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: spacing.sm,
   },
+  actionsLargeText: {
+    flexDirection: 'column',
+  },
   selectButton: {
     minHeight: 48,
+    minWidth: 0,
+    flexBasis: 136,
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 12,
     backgroundColor: colors.primary,
     paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
   },
   selectButtonSelected: {
     borderWidth: 2,
@@ -200,6 +213,7 @@ const styles = StyleSheet.create({
     color: colors.surface,
     fontSize: 15,
     fontWeight: '700',
+    textAlign: 'center',
   },
   selectButtonTextSelected: {
     color: colors.primary,
@@ -212,6 +226,8 @@ const styles = StyleSheet.create({
   },
   detailsButton: {
     minHeight: 48,
+    minWidth: 0,
+    flexBasis: 136,
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
@@ -220,11 +236,18 @@ const styles = StyleSheet.create({
     borderColor: colors.borderStrong,
     backgroundColor: colors.surface,
     paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  actionButtonLargeText: {
+    width: '100%',
+    flexBasis: 'auto',
+    flexGrow: 0,
   },
   detailsButtonText: {
     color: colors.text,
     fontSize: 15,
     fontWeight: '700',
+    textAlign: 'center',
   },
   pressed: {
     opacity: 0.72,

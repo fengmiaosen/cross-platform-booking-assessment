@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
@@ -17,11 +17,13 @@ export function BookingHeader({
   showFilterButton,
   onOpenFilters,
 }: BookingHeaderProps) {
+  const { fontScale } = useWindowDimensions();
+  const usesAccessibilityTextSize = fontScale >= 2;
   const filterLabel = activeFilterCount > 0 ? `Filters, ${activeFilterCount} active` : 'Filters';
 
   return (
-    <View style={styles.container}>
-      <View style={styles.copy}>
+    <View style={[styles.container, usesAccessibilityTextSize && styles.containerLargeText]}>
+      <View style={[styles.copy, !usesAccessibilityTextSize && styles.copyInline]}>
         <Text
           accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
           accessibilityRole="header"
@@ -42,7 +44,11 @@ export function BookingHeader({
           accessibilityHint="Opens session filtering options"
           accessibilityState={{ expanded: isFilterOpen }}
           onPress={onOpenFilters}
-          style={({ pressed }) => [styles.filterButton, pressed && styles.filterButtonPressed]}
+          style={({ pressed }) => [
+            styles.filterButton,
+            usesAccessibilityTextSize && styles.filterButtonLargeText,
+            pressed && styles.filterButtonPressed,
+          ]}
         >
           <Text style={styles.filterButtonText}>
             Filters{activeFilterCount > 0 ? ` (${activeFilterCount})` : ''}
@@ -61,20 +67,25 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: spacing.md,
   },
+  containerLargeText: {
+    flexDirection: 'column',
+    alignItems: 'stretch',
+  },
   copy: {
-    flex: 1,
+    minWidth: 0,
     gap: spacing.xs,
+  },
+  copyInline: {
+    flex: 1,
   },
   title: {
     color: colors.text,
     fontSize: 28,
     fontWeight: '700',
-    lineHeight: 34,
   },
   subtitle: {
     color: colors.textMuted,
     fontSize: 16,
-    lineHeight: 22,
   },
   filterButton: {
     minWidth: 88,
@@ -86,6 +97,10 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
     backgroundColor: colors.surface,
     paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  filterButtonLargeText: {
+    alignSelf: 'stretch',
   },
   filterButtonPressed: {
     backgroundColor: colors.surfaceSelected,
@@ -94,5 +109,6 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontSize: 16,
     fontWeight: '700',
+    textAlign: 'center',
   },
 });

@@ -46,7 +46,7 @@ export function DateSelector({ dates, selectedDateId, onSelectDate }: DateSelect
           pressed && !previousDisabled && styles.pressed,
         ]}
       >
-        <Text importantForAccessibility="no" style={styles.arrowText}>
+        <Text allowFontScaling={false} importantForAccessibility="no" style={styles.arrowText}>
           {'<'}
         </Text>
       </Pressable>
@@ -97,7 +97,7 @@ export function DateSelector({ dates, selectedDateId, onSelectDate }: DateSelect
           pressed && !nextDisabled && styles.pressed,
         ]}
       >
-        <Text importantForAccessibility="no" style={styles.arrowText}>
+        <Text allowFontScaling={false} importantForAccessibility="no" style={styles.arrowText}>
           {'>'}
         </Text>
       </Pressable>

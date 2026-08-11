@@ -147,13 +147,16 @@ Local `useReducer` state is sufficient because booking state is not shared with 
 - Session result counts use a polite live region where supported.
 - Touch targets are at least 48 by 48 logical pixels.
 - Text can wrap and continues to use the platform font-scaling behavior.
+- Accessibility text sizes stack competing horizontal content and make filter content scrollable.
 - Android modals implement `onRequestClose` for system back navigation.
+- iOS modals explicitly support portrait and both landscape orientations to match the app shell.
 
 Automated tests verify accessible names, speech formatting, and selected/disabled states. Physical
 iPhone VoiceOver testing verified the corrected date, time-range, AM/PM, selected, and unavailable
-announcements. The details modal also opens on its correctly labelled close button. TalkBack,
-modal background containment and focus restoration, and physical-keyboard behavior remain
-unverified.
+announcements, plus modal entry, background containment, dismissal, and focus restoration.
+Maximum iPhone Dynamic Type also passed wrapping, visibility, scrolling, and control-access checks.
+Landscape list, modal rotation, safe areas, and state retention passed physical-iPhone testing.
+TalkBack, Android font scaling, and physical-keyboard behavior remain unverified.
 
 ## Responsive and Cross-Platform Decisions
 

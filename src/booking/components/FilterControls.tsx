@@ -1,9 +1,18 @@
-import { Modal, Pressable, StyleSheet, Switch, Text, View } from 'react-native';
+import {
+  Modal,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Switch,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
-import { ACCESSIBILITY_LANGUAGE } from '../booking.constants';
+import { ACCESSIBILITY_LANGUAGE, SUPPORTED_MODAL_ORIENTATIONS } from '../booking.constants';
 import type { BookingFilters } from '../booking.types';
 
 type FilterControlsProps = {
@@ -19,6 +28,9 @@ type FilterContentProps = Omit<FilterControlsProps, 'presentation' | 'visible'> 
 };
 
 function FilterContent({ filters, showCloseButton, onChange, onClose }: FilterContentProps) {
+  const { fontScale } = useWindowDimensions();
+  const usesAccessibilityTextSize = fontScale >= 2;
+
   return (
     <View style={styles.panel}>
       <View style={styles.header}>
@@ -37,14 +49,14 @@ function FilterContent({ filters, showCloseButton, onChange, onClose }: FilterCo
             onPress={onClose}
             style={({ pressed }) => [styles.closeButton, pressed && styles.pressed]}
           >
-            <Text importantForAccessibility="no" style={styles.closeText}>
+            <Text allowFontScaling={false} importantForAccessibility="no" style={styles.closeText}>
               ×
             </Text>
           </Pressable>
         ) : null}
       </View>
 
-      <View style={styles.filterRow}>
+      <View style={[styles.filterRow, usesAccessibilityTextSize && styles.filterRowLargeText]}>
         <View style={styles.filterCopy}>
           <Text accessibilityLanguage={ACCESSIBILITY_LANGUAGE} style={styles.filterLabel}>
             Available sessions only
@@ -59,6 +71,7 @@ function FilterContent({ filters, showCloseButton, onChange, onClose }: FilterCo
           accessibilityHint="Hides sessions that have no open spots"
           value={filters.onlyAvailable}
           onValueChange={(onlyAvailable) => onChange({ ...filters, onlyAvailable })}
+          style={usesAccessibilityTextSize ? styles.switchLargeText : undefined}
           trackColor={{ false: colors.borderStrong, true: colors.primary }}
         />
       </View>
@@ -88,10 +101,30 @@ export function FilterControls(props: FilterControlsProps) {
   if (!props.visible) return null;
 
   return (
-    <Modal animationType="fade" onRequestClose={props.onClose} transparent visible={props.visible}>
-      <View style={[styles.overlay, { paddingBottom: Math.max(insets.bottom, spacing.lg) }]}>
+    <Modal
+      animationType="fade"
+      onRequestClose={props.onClose}
+      supportedOrientations={SUPPORTED_MODAL_ORIENTATIONS}
+      transparent
+      visible={props.visible}
+    >
+      <View
+        style={[
+          styles.overlay,
+          {
+            paddingTop: Math.max(insets.top, spacing.lg),
+            paddingBottom: Math.max(insets.bottom, spacing.lg),
+          },
+        ]}
+      >
         <View accessibilityViewIsModal style={styles.modalPanel}>
-          <FilterContent {...props} showCloseButton />
+          <ScrollView
+            bounces={false}
+            contentContainerStyle={styles.modalScrollContent}
+            showsVerticalScrollIndicator={false}
+          >
+            <FilterContent {...props} showCloseButton />
+          </ScrollView>
         </View>
       </View>
     </Modal>
@@ -108,7 +141,12 @@ const styles = StyleSheet.create({
   modalPanel: {
     width: '100%',
     maxWidth: 520,
+    maxHeight: '100%',
     alignSelf: 'center',
+  },
+  modalScrollContent: {
+    flexGrow: 1,
+    justifyContent: 'flex-end',
   },
   panel: {
     gap: spacing.lg,
@@ -125,6 +163,8 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   title: {
+    minWidth: 0,
+    flex: 1,
     color: colors.text,
     fontSize: 20,
     fontWeight: '700',
@@ -132,6 +172,7 @@ const styles = StyleSheet.create({
   closeButton: {
     width: 48,
     height: 48,
+    flexShrink: 0,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 12,
@@ -139,7 +180,6 @@ const styles = StyleSheet.create({
   closeText: {
     color: colors.text,
     fontSize: 30,
-    lineHeight: 32,
   },
   filterRow: {
     minHeight: 64,
@@ -147,6 +187,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: spacing.md,
+  },
+  filterRowLargeText: {
+    flexDirection: 'column',
+    alignItems: 'stretch',
   },
   filterCopy: {
     flex: 1,
@@ -160,7 +204,9 @@ const styles = StyleSheet.create({
   filterDescription: {
     color: colors.textMuted,
     fontSize: 14,
-    lineHeight: 20,
+  },
+  switchLargeText: {
+    alignSelf: 'flex-start',
   },
   applyButton: {
     minHeight: 48,
@@ -169,6 +215,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: colors.primary,
     paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
   },
   applyButtonPressed: {
     backgroundColor: colors.primaryPressed,
@@ -177,6 +224,7 @@ const styles = StyleSheet.create({
     color: colors.surface,
     fontSize: 16,
     fontWeight: '700',
+    textAlign: 'center',
   },
   pressed: {
     opacity: 0.7,

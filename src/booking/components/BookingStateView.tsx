@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
   message: {
     color: colors.textMuted,
     fontSize: 16,
-    lineHeight: 22,
     textAlign: 'center',
   },
   retryButton: {
@@ -80,6 +79,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: colors.primary,
     paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
   },
   retryButtonPressed: {
     backgroundColor: colors.primaryPressed,
@@ -88,5 +88,6 @@ const styles = StyleSheet.create({
     color: colors.surface,
     fontSize: 16,
     fontWeight: '700',
+    textAlign: 'center',
   },
 });

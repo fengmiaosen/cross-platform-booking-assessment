@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { SUPPORTED_MODAL_ORIENTATIONS } from '../booking.constants';
 import { createMockBookingRepository, type BookingRepository } from '../booking.repository';
 import type { BookingDate, Session } from '../booking.types';
 import { BookingScreen } from '../BookingScreen';
@@ -26,6 +27,15 @@ function createDeferred<T>() {
   return { promise, resolve };
 }
 
+function expectOpenModalSupportsRotation() {
+  const modalHosts = screen.container.queryAll(
+    (element) => element.props.supportedOrientations !== undefined,
+  );
+
+  expect(modalHosts).toHaveLength(1);
+  expect(modalHosts[0]?.props.supportedOrientations).toEqual(SUPPORTED_MODAL_ORIENTATIONS);
+}
+
 describe('BookingScreen', () => {
   it('completes the accessible booking flow', async () => {
     await renderScreen();
@@ -38,6 +48,7 @@ describe('BookingScreen', () => {
     await screen.findByText('5 spots available');
 
     await fireEvent.press(screen.getByRole('button', { name: 'Filters' }));
+    expectOpenModalSupportsRotation();
     const availabilitySwitch = screen.getByRole('switch', {
       name: 'Available sessions only',
     });
@@ -56,6 +67,7 @@ describe('BookingScreen', () => {
     expect(selectButton.props.accessibilityState).toEqual({ selected: true, disabled: false });
 
     await fireEvent.press(screen.getByRole('button', { name: 'View details for Mobility Flow' }));
+    expectOpenModalSupportsRotation();
     expect(screen.getByRole('header', { name: 'Session details' })).toBeTruthy();
     expect(
       screen.getByText('A low-impact mobility session for range of motion and recovery.'),

@@ -40,6 +40,8 @@ VoiceOver is named **旁白** on a Chinese iPhone. It is different from Speak Sc
 - [x] Time-range context and direction
 - [x] Selected and unavailable button announcements
 - [x] Details modal opens on “Close session details”
-- [ ] Filter/details modal background containment
-- [ ] Focus restoration after closing a modal
-- [ ] Large Dynamic Type layout
+- [x] Filter/details modal background containment and dismissal
+- [x] Focus restoration after closing a modal
+- [x] Large Dynamic Type text wrapping
+- [x] Large Dynamic Type header visibility
+- [x] Large Dynamic Type overlap, clipping, and modal scrolling
