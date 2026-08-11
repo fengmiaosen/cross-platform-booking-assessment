@@ -47,8 +47,7 @@ Manual native-runtime results must be updated only after the listed environment 
 | Foldable resizing               | Design compatibility only | No physical foldable device or hinge awareness |
 | Legacy Architecture             | Source portability only   | Requires a separate SDK 54 build               |
 
-See [iPhone Expo Go Setup](ios-expo-go-setup.md) for the physical-device installation path and
-[VoiceOver QA Notes](voiceover-qa.md) for observed issues, fixes, and remaining manual checks.
+See [VoiceOver QA Notes](voiceover-qa.md) for observed issues, fixes, and remaining manual checks.
 
 ## Future Work
 
