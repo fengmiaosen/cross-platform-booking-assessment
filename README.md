@@ -275,7 +275,3 @@ Source portability is not presented as a verified Legacy build.
 ### Dependency audit note
 
 `npm audit --omit=dev` reports transitive advisories through the Expo/React Native Metro and Xcode toolchain (`image-size` and `uuid`). npm's proposed forced resolution would make a breaking downgrade to Expo SDK 53, so it was not applied. Expo Doctor passes all 21 compatibility checks. A production team should track the upstream Expo/Metro fixes and upgrade through an Expo-supported SDK patch rather than override the locked toolchain blindly.
-
-## Time Log
-
-The work-session log is maintained in [TIMELOG.md](TIMELOG.md) and should also be pasted into the submission email.
