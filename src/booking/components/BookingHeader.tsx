@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
+import { ACCESSIBILITY_LANGUAGE } from '../booking.constants';
 
 type BookingHeaderProps = {
   activeFilterCount: number;
@@ -21,14 +22,21 @@ export function BookingHeader({
   return (
     <View style={styles.container}>
       <View style={styles.copy}>
-        <Text accessibilityRole="header" style={styles.title}>
+        <Text
+          accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
+          accessibilityRole="header"
+          style={styles.title}
+        >
           Book a session
         </Text>
-        <Text style={styles.subtitle}>Choose a date and session that works for you.</Text>
+        <Text accessibilityLanguage={ACCESSIBILITY_LANGUAGE} style={styles.subtitle}>
+          Choose a date and session that works for you.
+        </Text>
       </View>
 
       {showFilterButton ? (
         <Pressable
+          accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
           accessibilityRole="button"
           accessibilityLabel={filterLabel}
           accessibilityHint="Opens session filtering options"

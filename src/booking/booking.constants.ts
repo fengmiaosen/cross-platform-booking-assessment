@@ -1,5 +1,7 @@
 import type { BookingFilters, BookingState, LayoutMode } from './booking.types';
 
+export const ACCESSIBILITY_LANGUAGE = 'en-US';
+
 export const DEFAULT_FILTERS: BookingFilters = {
   onlyAvailable: false,
 };

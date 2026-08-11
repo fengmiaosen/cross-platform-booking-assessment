@@ -61,12 +61,18 @@ npm run android
 
 Expo Go availability varies during SDK transitions. If the installed Expo Go client does not support SDK 56, use a simulator-compatible client or create a local development build with `npx expo run:ios` / `npx expo run:android`.
 
+## Accessibility QA Notes
+
+[VoiceOver QA Notes](docs/voiceover-qa.md) covers screen-reader findings, fixes, and remaining
+physical-device checks.
+
 ## Architecture
 
 ```text
 src/
 ├── booking/
 │   ├── BookingScreen.tsx
+│   ├── booking.accessibility.ts
 │   ├── booking.constants.ts
 │   ├── booking.reducer.ts
 │   ├── booking.repository.ts
@@ -123,9 +129,18 @@ Local `useReducer` state is sufficient because booking state is not shared with 
 ## Accessibility Decisions
 
 - Every interactive icon has a meaningful accessible name.
-- Dates expose full names such as “Monday, August 10,” while keeping compact visual labels.
+- The English interface declares `en-US` accessibility language across headings, dates, times,
+  status text, and controls. Dates expose complete names such as “Monday, August 10, 2026,” while
+  keeping compact visual labels.
+- Visual ranges such as `8:00 AM – 9:00 AM` use explicit spoken labels such as “Session time, from
+  eight o'clock A M to nine o'clock A M,” so VoiceOver conveys the context, direction, and
+  meridiem.
+- Session action labels stay concise (for example, “Select Mobility Flow”); the card's title, time,
+  availability, and action are exposed separately to avoid repeated announcements.
+- Full-session controls announce “Unavailable for [session]” in addition to their native disabled
+  state, rather than describing an action that cannot be performed.
 - Date and session controls expose selected and disabled states.
-- Session selection labels include title, time, and availability.
+- Session facts and actions are exposed separately to avoid repetitive card announcements.
 - Full sessions cannot be selected, but their details remain available.
 - “Select session” and “View details” are sibling controls, not nested pressables.
 - Filter controls expose expanded state and the number of active filters.
@@ -134,7 +149,11 @@ Local `useReducer` state is sufficient because booking state is not shared with 
 - Text can wrap and continues to use the platform font-scaling behavior.
 - Android modals implement `onRequestClose` for system back navigation.
 
-Automated tests verify accessible names and selected/disabled states. Actual VoiceOver, TalkBack, focus restoration, and physical-keyboard behavior still require native runtime validation.
+Automated tests verify accessible names, speech formatting, and selected/disabled states. Physical
+iPhone VoiceOver validation is in progress and has already identified locale, time-abbreviation,
+range-context, verbosity, and unavailable-state issues. The latest fixes still require a final
+device regression pass. TalkBack, focus restoration, and physical-keyboard behavior remain
+unverified.
 
 ## Responsive and Cross-Platform Decisions
 
@@ -178,6 +197,7 @@ Implemented P0 automation:
 - reducer unit tests;
 - selector and responsive-layout unit tests;
 - SessionCard accessibility component tests;
+- date and spoken-time accessibility formatting tests;
 - BookingScreen integration flow;
 - loading failure and retry presentation;
 - stale asynchronous response protection.
@@ -204,7 +224,7 @@ Current automated validation:
 | -------------------------------- | ------------------------- |
 | TypeScript                       | Passed                    |
 | ESLint                           | Passed with zero warnings |
-| Jest/RNTL                        | 4 suites, 15 tests passed |
+| Jest/RNTL                        | 5 suites, 21 tests passed |
 | Expo Doctor                      | 21/21 checks passed       |
 | iOS JavaScript bundle export     | Passed                    |
 | Android JavaScript bundle export | Passed                    |

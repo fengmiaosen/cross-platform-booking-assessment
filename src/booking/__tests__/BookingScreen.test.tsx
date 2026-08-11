@@ -30,10 +30,11 @@ describe('BookingScreen', () => {
   it('completes the accessible booking flow', async () => {
     await renderScreen();
 
-    const monday = await screen.findByRole('button', { name: 'Monday, August 10' });
+    const monday = await screen.findByRole('button', { name: 'Monday, August 10, 2026' });
     expect(monday.props.accessibilityState).toEqual({ selected: true });
+    expect(monday.props.accessibilityLanguage).toBe('en-US');
 
-    await fireEvent.press(screen.getByRole('button', { name: 'Tuesday, August 11' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Tuesday, August 11, 2026' }));
     await screen.findByText('5 spots available');
 
     await fireEvent.press(screen.getByRole('button', { name: 'Filters' }));
@@ -49,7 +50,7 @@ describe('BookingScreen', () => {
     });
 
     const selectButton = screen.getByRole('button', {
-      name: /Select Mobility Flow, 10:00 AM to 10:45 AM, 7 spots available/,
+      name: 'Select Mobility Flow',
     });
     await fireEvent.press(selectButton);
     expect(selectButton.props.accessibilityState).toEqual({ selected: true, disabled: false });
@@ -84,21 +85,21 @@ describe('BookingScreen', () => {
         isoDate: '2026-08-10',
         weekdayLabel: 'Mon',
         dayNumber: '10',
-        fullLabel: 'Monday, August 10',
+        fullLabel: 'Monday, August 10, 2026',
       },
       {
         id: 'tuesday',
         isoDate: '2026-08-11',
         weekdayLabel: 'Tue',
         dayNumber: '11',
-        fullLabel: 'Tuesday, August 11',
+        fullLabel: 'Tuesday, August 11, 2026',
       },
       {
         id: 'wednesday',
         isoDate: '2026-08-12',
         weekdayLabel: 'Wed',
         dayNumber: '12',
-        fullLabel: 'Wednesday, August 12',
+        fullLabel: 'Wednesday, August 12, 2026',
       },
     ];
     const makeSession = (dateId: string, title: string): Session => ({
@@ -128,8 +129,8 @@ describe('BookingScreen', () => {
     await renderScreen(repository);
     await screen.findByText('Monday Session');
 
-    await fireEvent.press(screen.getByRole('button', { name: 'Tuesday, August 11' }));
-    await fireEvent.press(screen.getByRole('button', { name: 'Wednesday, August 12' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Tuesday, August 11, 2026' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Wednesday, August 12, 2026' }));
 
     await act(async () => {
       wednesday.resolve([makeSession('wednesday', 'Wednesday Session')]);

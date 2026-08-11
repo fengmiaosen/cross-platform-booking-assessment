@@ -8,7 +8,7 @@ This file distinguishes completed automation, completed manual validation, desig
 | ---------------------------------------- | ------ |
 | TypeScript strict type check             | Passed |
 | ESLint with zero warnings                | Passed |
-| Jest/RNTL: 4 suites, 15 tests            | Passed |
+| Jest/RNTL: 5 suites, 21 tests            | Passed |
 | Reducer and selector unit tests          | Passed |
 | Responsive layout unit tests             | Passed |
 | SessionCard accessibility tests          | Passed |
@@ -23,17 +23,18 @@ This file distinguishes completed automation, completed manual validation, desig
 
 Manual native-runtime results must be updated only after the listed environment has actually been used.
 
-| Environment                       | Status         | Notes                                 |
-| --------------------------------- | -------------- | ------------------------------------- |
-| iPhone small-screen simulator     | Not tested     | CoreSimulator service was unavailable |
-| Mainstream iPhone simulator       | Not tested     | CoreSimulator service was unavailable |
-| iPad portrait/landscape           | Not tested     | CoreSimulator service was unavailable |
-| Android phone emulator            | Not tested     | Android `adb` was unavailable         |
-| Android tablet emulator           | Not tested     | Android `adb` was unavailable         |
-| VoiceOver                         | Not yet tested | Requires native runtime               |
-| TalkBack                          | Not yet tested | Requires native runtime               |
-| Dynamic Type / Android font scale | Not yet tested | Requires system settings              |
-| Android system back               | Not yet tested | Requires Android runtime              |
+| Environment                       | Status         | Notes                                                              |
+| --------------------------------- | -------------- | ------------------------------------------------------------------ |
+| iPhone small-screen simulator     | Not tested     | CoreSimulator service was unavailable                              |
+| Mainstream iPhone simulator       | Not tested     | CoreSimulator service was unavailable                              |
+| iPad portrait/landscape           | Not tested     | CoreSimulator service was unavailable                              |
+| Android phone emulator            | Not tested     | Android `adb` was unavailable                                      |
+| Android tablet emulator           | Not tested     | Android `adb` was unavailable                                      |
+| Physical iPhone / Expo SDK 56     | Passed         | Signed Expo Go installed; project opened successfully              |
+| VoiceOver                         | In progress    | Speech works; semantic fixes implemented; final regression pending |
+| TalkBack                          | Not yet tested | Requires native runtime                                            |
+| Dynamic Type / Android font scale | Not yet tested | Requires system settings                                           |
+| Android system back               | Not yet tested | Requires Android runtime                                           |
 
 ## Compatibility by Design
 
@@ -42,6 +43,9 @@ Manual native-runtime results must be updated only after the listed environment 
 | Compact/medium/expanded windows | Automated layout logic    | Native rendering still needs manual QA         |
 | Foldable resizing               | Design compatibility only | No physical foldable device or hinge awareness |
 | Legacy Architecture             | Source portability only   | Requires a separate SDK 54 build               |
+
+See [iPhone Expo Go Setup](ios-expo-go-setup.md) for the physical-device installation path and
+[VoiceOver QA Notes](voiceover-qa.md) for observed issues, fixes, and remaining manual checks.
 
 ## Future Work
 

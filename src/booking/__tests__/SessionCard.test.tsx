@@ -23,10 +23,17 @@ describe('SessionCard', () => {
     );
 
     const selectButton = screen.getByRole('button', {
-      name: /Select Strength Foundations, 8:00 AM to 9:00 AM, 8 spots available/,
+      name: 'Select Strength Foundations',
     });
 
+    expect(selectButton.props.accessibilityLabel).not.toContain('8:00 AM');
+    expect(selectButton.props.accessibilityLabel).not.toContain('spots available');
     expect(selectButton.props.accessibilityState).toEqual({ selected: true, disabled: false });
+    expect(selectButton.props.accessibilityLanguage).toBe('en-US');
+    expect(screen.getByText('8:00 AM – 9:00 AM').props).toMatchObject({
+      accessibilityLanguage: 'en-US',
+      accessibilityLabel: "Session time, from eight o'clock A M to nine o'clock A M",
+    });
     await fireEvent.press(selectButton);
     expect(onSelect).toHaveBeenCalledWith(session.id);
   });
@@ -46,9 +53,10 @@ describe('SessionCard', () => {
     );
 
     const selectButton = screen.getByRole('button', {
-      name: /Select Strength Foundations.+Session full/,
+      name: 'Unavailable for Strength Foundations',
       disabled: true,
     });
+    expect(selectButton.props.accessibilityLabel).toBe('Unavailable for Strength Foundations');
     expect(selectButton.props.accessibilityState).toEqual({ selected: false, disabled: true });
 
     await fireEvent.press(

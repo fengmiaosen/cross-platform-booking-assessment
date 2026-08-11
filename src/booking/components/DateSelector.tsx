@@ -2,6 +2,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
+import { ACCESSIBILITY_LANGUAGE } from '../booking.constants';
 import type { BookingDate } from '../booking.types';
 
 type DateSelectorProps = {
@@ -27,8 +28,13 @@ export function DateSelector({ dates, selectedDateId, onSelectDate }: DateSelect
   };
 
   return (
-    <View accessibilityLabel="Available dates" style={styles.container}>
+    <View
+      accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
+      accessibilityLabel="Available dates"
+      style={styles.container}
+    >
       <Pressable
+        accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
         accessibilityRole="button"
         accessibilityLabel="Select previous date"
         accessibilityState={{ disabled: previousDisabled }}
@@ -56,6 +62,7 @@ export function DateSelector({ dates, selectedDateId, onSelectDate }: DateSelect
           return (
             <Pressable
               key={date.id}
+              accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
               accessibilityRole="button"
               accessibilityLabel={date.fullLabel}
               accessibilityState={{ selected }}
@@ -78,6 +85,7 @@ export function DateSelector({ dates, selectedDateId, onSelectDate }: DateSelect
       </ScrollView>
 
       <Pressable
+        accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
         accessibilityRole="button"
         accessibilityLabel="Select next date"
         accessibilityState={{ disabled: nextDisabled }}

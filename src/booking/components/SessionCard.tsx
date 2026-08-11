@@ -3,6 +3,8 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
+import { formatTimeRangeForAccessibility } from '../booking.accessibility';
+import { ACCESSIBILITY_LANGUAGE } from '../booking.constants';
 import type { Session } from '../booking.types';
 
 type SessionCardProps = {
@@ -20,13 +22,26 @@ export const SessionCard = memo(function SessionCard({
 }: SessionCardProps) {
   const available = session.openSpots > 0;
   const availabilityText = available ? `${session.openSpots} spots available` : 'Session full';
+  const timeAccessibilityLabel = formatTimeRangeForAccessibility(
+    session.startTime,
+    session.endTime,
+  );
+  const selectButtonLabel = available
+    ? `Select ${session.title}`
+    : `Unavailable for ${session.title}`;
 
   return (
     <View style={[styles.card, selected && styles.cardSelected]}>
       <View style={styles.header}>
         <View style={styles.titleGroup}>
-          <Text style={styles.title}>{session.title}</Text>
-          <Text style={styles.time}>
+          <Text accessibilityLanguage={ACCESSIBILITY_LANGUAGE} style={styles.title}>
+            {session.title}
+          </Text>
+          <Text
+            accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
+            accessibilityLabel={timeAccessibilityLabel}
+            style={styles.time}
+          >
             {session.startTime} – {session.endTime}
           </Text>
         </View>
@@ -41,10 +56,11 @@ export const SessionCard = memo(function SessionCard({
         ) : null}
       </View>
 
-      <Text style={styles.metadata}>
+      <Text accessibilityLanguage={ACCESSIBILITY_LANGUAGE} style={styles.metadata}>
         {session.coach} · {session.location}
       </Text>
       <Text
+        accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
         style={[styles.availability, available ? styles.availabilityOpen : styles.availabilityFull]}
       >
         {availabilityText}
@@ -52,9 +68,12 @@ export const SessionCard = memo(function SessionCard({
 
       <View style={styles.actions}>
         <Pressable
+          accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
           accessibilityRole="button"
-          accessibilityLabel={`Select ${session.title}, ${session.startTime} to ${session.endTime}, ${availabilityText}`}
-          accessibilityHint="Selects this session for booking"
+          accessibilityLabel={selectButtonLabel}
+          accessibilityHint={
+            available && !selected ? 'Selects this session for booking' : undefined
+          }
           accessibilityState={{ selected, disabled: !available }}
           disabled={!available}
           onPress={() => onSelect(session.id)}
@@ -77,6 +96,7 @@ export const SessionCard = memo(function SessionCard({
         </Pressable>
 
         <Pressable
+          accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
           accessibilityRole="button"
           accessibilityLabel={`View details for ${session.title}`}
           onPress={() => onOpenDetails(session.id)}

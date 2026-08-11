@@ -3,6 +3,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
+import { ACCESSIBILITY_LANGUAGE } from '../booking.constants';
 import type { BookingFilters } from '../booking.types';
 
 type FilterControlsProps = {
@@ -21,11 +22,16 @@ function FilterContent({ filters, showCloseButton, onChange, onClose }: FilterCo
   return (
     <View style={styles.panel}>
       <View style={styles.header}>
-        <Text accessibilityRole="header" style={styles.title}>
+        <Text
+          accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
+          accessibilityRole="header"
+          style={styles.title}
+        >
           Filters
         </Text>
         {showCloseButton ? (
           <Pressable
+            accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
             accessibilityRole="button"
             accessibilityLabel="Close filters"
             onPress={onClose}
@@ -40,10 +46,15 @@ function FilterContent({ filters, showCloseButton, onChange, onClose }: FilterCo
 
       <View style={styles.filterRow}>
         <View style={styles.filterCopy}>
-          <Text style={styles.filterLabel}>Available sessions only</Text>
-          <Text style={styles.filterDescription}>Hide sessions that have no open spots.</Text>
+          <Text accessibilityLanguage={ACCESSIBILITY_LANGUAGE} style={styles.filterLabel}>
+            Available sessions only
+          </Text>
+          <Text accessibilityLanguage={ACCESSIBILITY_LANGUAGE} style={styles.filterDescription}>
+            Hide sessions that have no open spots.
+          </Text>
         </View>
         <Switch
+          accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
           accessibilityLabel="Available sessions only"
           accessibilityHint="Hides sessions that have no open spots"
           value={filters.onlyAvailable}
@@ -54,6 +65,7 @@ function FilterContent({ filters, showCloseButton, onChange, onClose }: FilterCo
 
       {showCloseButton ? (
         <Pressable
+          accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
           accessibilityRole="button"
           accessibilityLabel="Apply filters"
           onPress={onClose}

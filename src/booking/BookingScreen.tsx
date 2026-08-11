@@ -4,7 +4,7 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { colors } from '../theme/colors';
 import { spacing } from '../theme/spacing';
 
-import { getColumnCount, getLayoutMode } from './booking.constants';
+import { ACCESSIBILITY_LANGUAGE, getColumnCount, getLayoutMode } from './booking.constants';
 import type { BookingRepository } from './booking.repository';
 import { BookingHeader } from './components/BookingHeader';
 import { BookingStateView } from './components/BookingStateView';
@@ -55,7 +55,11 @@ export function BookingScreen({ repository }: BookingScreenProps) {
   };
 
   return (
-    <SafeAreaView edges={['top', 'left', 'right']} style={styles.safeArea}>
+    <SafeAreaView
+      accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
+      edges={['top', 'left', 'right']}
+      style={styles.safeArea}
+    >
       <View style={styles.page}>
         <View style={styles.content}>
           <BookingHeader

@@ -3,6 +3,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
+import { formatTimeRangeForAccessibility } from '../booking.accessibility';
+import { ACCESSIBILITY_LANGUAGE } from '../booking.constants';
 import type { Session } from '../booking.types';
 
 type SessionDetailsProps = {
@@ -13,14 +15,23 @@ type SessionDetailsProps = {
 
 function DetailsContent({ session, onClose }: Omit<SessionDetailsProps, 'presentation'>) {
   if (!session) return null;
+  const timeAccessibilityLabel = formatTimeRangeForAccessibility(
+    session.startTime,
+    session.endTime,
+  );
 
   return (
     <View style={styles.panel}>
       <View style={styles.header}>
-        <Text accessibilityRole="header" style={styles.title}>
+        <Text
+          accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
+          accessibilityRole="header"
+          style={styles.title}
+        >
           Session details
         </Text>
         <Pressable
+          accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
           accessibilityRole="button"
           accessibilityLabel="Close session details"
           onPress={onClose}
@@ -33,29 +44,49 @@ function DetailsContent({ session, onClose }: Omit<SessionDetailsProps, 'present
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.sessionTitle}>{session.title}</Text>
+        <Text accessibilityLanguage={ACCESSIBILITY_LANGUAGE} style={styles.sessionTitle}>
+          {session.title}
+        </Text>
 
         <View style={styles.detailGroup}>
-          <Text style={styles.detailLabel}>Time</Text>
-          <Text style={styles.detailValue}>
+          <Text accessibilityLanguage={ACCESSIBILITY_LANGUAGE} style={styles.detailLabel}>
+            Time
+          </Text>
+          <Text
+            accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
+            accessibilityLabel={timeAccessibilityLabel}
+            style={styles.detailValue}
+          >
             {session.startTime} – {session.endTime}
           </Text>
         </View>
         <View style={styles.detailGroup}>
-          <Text style={styles.detailLabel}>Coach</Text>
-          <Text style={styles.detailValue}>{session.coach}</Text>
+          <Text accessibilityLanguage={ACCESSIBILITY_LANGUAGE} style={styles.detailLabel}>
+            Coach
+          </Text>
+          <Text accessibilityLanguage={ACCESSIBILITY_LANGUAGE} style={styles.detailValue}>
+            {session.coach}
+          </Text>
         </View>
         <View style={styles.detailGroup}>
-          <Text style={styles.detailLabel}>Location</Text>
-          <Text style={styles.detailValue}>{session.location}</Text>
+          <Text accessibilityLanguage={ACCESSIBILITY_LANGUAGE} style={styles.detailLabel}>
+            Location
+          </Text>
+          <Text accessibilityLanguage={ACCESSIBILITY_LANGUAGE} style={styles.detailValue}>
+            {session.location}
+          </Text>
         </View>
         <View style={styles.detailGroup}>
-          <Text style={styles.detailLabel}>Availability</Text>
-          <Text style={styles.detailValue}>
+          <Text accessibilityLanguage={ACCESSIBILITY_LANGUAGE} style={styles.detailLabel}>
+            Availability
+          </Text>
+          <Text accessibilityLanguage={ACCESSIBILITY_LANGUAGE} style={styles.detailValue}>
             {session.openSpots > 0 ? `${session.openSpots} spots available` : 'Session full'}
           </Text>
         </View>
-        <Text style={styles.description}>{session.description}</Text>
+        <Text accessibilityLanguage={ACCESSIBILITY_LANGUAGE} style={styles.description}>
+          {session.description}
+        </Text>
       </ScrollView>
     </View>
   );
@@ -68,7 +99,11 @@ export function SessionDetails({ session, presentation, onClose }: SessionDetail
 
   if (presentation === 'pane') {
     return (
-      <View accessibilityLabel="Session details panel" style={styles.pane}>
+      <View
+        accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
+        accessibilityLabel="Session details panel"
+        style={styles.pane}
+      >
         <DetailsContent session={session} onClose={onClose} />
       </View>
     );

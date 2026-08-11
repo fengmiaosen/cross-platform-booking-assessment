@@ -7,7 +7,7 @@ const date: BookingDate = {
   isoDate: '2026-08-10',
   weekdayLabel: 'Mon',
   dayNumber: '10',
-  fullLabel: 'Monday, August 10',
+  fullLabel: 'Monday, August 10, 2026',
 };
 
 const session: Session = {

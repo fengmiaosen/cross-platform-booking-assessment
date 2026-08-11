@@ -3,6 +3,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
+import { ACCESSIBILITY_LANGUAGE } from '../booking.constants';
 import type { Session } from '../booking.types';
 
 import { BookingStateView } from './BookingStateView';
@@ -42,6 +43,7 @@ export function SessionList({
   return (
     <FlatList
       key={`session-grid-${columnCount}`}
+      accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
       accessibilityLabel="Available sessions"
       data={sessions}
       keyExtractor={(item) => item.id}
@@ -50,7 +52,11 @@ export function SessionList({
       columnWrapperStyle={columnCount > 1 ? styles.columnWrapper : undefined}
       contentContainerStyle={[styles.content, { paddingBottom: bottomInset + spacing.xl }]}
       ListHeaderComponent={
-        <Text accessibilityLiveRegion="polite" style={styles.resultCount}>
+        <Text
+          accessibilityLanguage={ACCESSIBILITY_LANGUAGE}
+          accessibilityLiveRegion="polite"
+          style={styles.resultCount}
+        >
           {sessions.length} {sessions.length === 1 ? 'session' : 'sessions'}
         </Text>
       }
